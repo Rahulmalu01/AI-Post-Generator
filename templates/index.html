@@ -3,62 +3,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Post Genius - Smart Social Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Genius - Smarter Social Media Scheduling</title>
+  <meta name="description" content="Plan, automate, and manage your social media content like a pro across all platforms with Post Genius.">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
 
-  <!-- Reusable navigation bar -->
-  {% include "nav.html" %}
+  <!-- Include Navigation -->
+  {% include 'nav.html' %}
 
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-container">
+      <!-- Left Column - Content -->
       <div class="hero-content">
-        <h1>AI Tools for Captions & Images</h1>
-        {% if user.is_authenticated %}
-          <p>Welcome, {{ user.username }}! Use the tools below.</p>
-        {% else %}
-          <p>Please <a href="{% url 'signin' %}">sign in</a> to use tools.</p>
-        {% endif %}
+        <h1 class="hero-title">
+          Post Genius – <span class="text-accent">Smarter Social Media</span> Scheduling
+        </h1>
+        <p class="hero-subtitle">Plan, automate, and manage your content like a pro across all platforms.</p>
+
+        <!-- Benefits List -->
+        <div class="benefits-list">
+          <div class="benefit-item"><div class="benefit-icon green">⚡</div><span>Save time with auto-posting</span></div>
+          <div class="benefit-item"><div class="benefit-icon blue">👥</div><span>Manage all accounts in one place</span></div>
+          <div class="benefit-item"><div class="benefit-icon purple">📅</div><span>Smart calendar & analytics</span></div>
+          <div class="benefit-item"><div class="benefit-icon orange">📊</div><span>Designed for creators and marketers</span></div>
+        </div>
+
+        <!-- CTA Button -->
+        <button class="btn btn-cta">Get Started <span class="arrow">→</span></button>
+      </div>
+
+      <!-- Right Column - Hero Image -->
+      <div class="hero-image">
+        <div class="dashboard-preview">
+          <div class="dashboard-container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+              <h3>Dashboard</h3>
+              <div class="window-controls">
+                <div class="control red"></div>
+                <div class="control yellow"></div>
+                <div class="control green"></div>
+              </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+              <div class="stats-row">
+                <div class="stat-card blue"><div class="stat-number">147</div><div class="stat-label">Posts Scheduled</div></div>
+                <div class="stat-card green"><div class="stat-number">5.2K</div><div class="stat-label">Engagement</div></div>
+                <div class="stat-card purple"><div class="stat-number">12</div><div class="stat-label">Platforms</div></div>
+              </div>
+
+              <!-- Calendar Preview -->
+              <div class="calendar-preview">
+                <div class="calendar-title">Content Calendar</div>
+                <div class="calendar-grid">
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day active"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day active"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day active"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day"></div>
+                  <div class="calendar-day active"></div>
+                  <div class="calendar-day"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Robot Image -->
+          <div class="ai-robot">
+            <img src="{% static 'Element.png' %}" alt="AI Assistant">
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  {% if user.is_authenticated %}
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features-container">
+      <div class="features-header">
+        <h2>Everything you need to dominate social media</h2>
+        <p>Streamline your social media workflow with powerful features designed for modern creators and marketers.</p>
+      </div>
 
-  <!-- Caption Generator -->
-  <section class="caption-generator">
-    <h2>Generate a Caption</h2>
-    <form id="caption-form">
-      <input type="text" id="caption-topic" placeholder="Enter a topic..." required />
-      <button type="submit">Generate Caption</button>
-    </form>
-    <div id="caption-result"></div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon blue">📅</div>
+          <h3>Smart Scheduling</h3>
+          <p>AI-powered optimal posting times for maximum engagement.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon green">📊</div>
+          <h3>Analytics Dashboard</h3>
+          <p>Track performance across all platforms in one place.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon purple">👥</div>
+          <h3>Team Collaboration</h3>
+          <p>Work together seamlessly with role-based permissions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon orange">⚡</div>
+          <h3>Auto-Posting</h3>
+          <p>Set it and forget it with reliable automated publishing.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Image Generator -->
-  <section class="image-generator">
-    <h2>Generate an Image</h2>
-    <form id="image-form">
-      <input type="text" id="image-prompt" placeholder="Describe an image..." required />
-      <button type="submit">Generate Image</button>
-    </form>
-    <div id="image-result"></div>
-  </section>
-
-  <!-- Engagement Predictor -->
-  <section class="analytics">
-    <h2>Predict Engagement</h2>
-    <form id="engagement-form">
-      <textarea id="caption-input" placeholder="Paste your caption here..." required></textarea>
-      <button type="submit">Predict</button>
-    </form>
-    <div id="engagement-result"></div>
-  </section>
-
-  {% endif %}
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="{% static 'Logo post genius.png' %}" alt="Post Genius Logo" class="logo-img">
+        <span class="logo-text">Post Genius</span>
+      </div>
+      <p class="footer-text">© 2025 Post Genius. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="{% static 'script.js' %}"></script>
 </body>

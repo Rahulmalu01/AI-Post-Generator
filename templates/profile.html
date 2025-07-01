@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Profile - Post Genius</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  {% include 'nav.html' %}
+
+  <div class="auth-container">
+    <h1>My Profile</h1>
+    <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%;">
+    <p><strong>Name:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Bio:</strong> {{ profile.bio|default:"No bio yet." }}</p>
+
+    <a href="{% url 'edit_profile' %}" class="btn btn-outline">Edit Profile</a>
+  </div>
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

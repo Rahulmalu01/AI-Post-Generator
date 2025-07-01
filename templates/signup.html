@@ -1,12 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - Post Genius</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 <body>
+
+  {% include 'nav.html' %}
+
   <div class="auth-container">
     <h1 class="logo">Post Genius</h1>
     <h2>Sign Up</h2>
@@ -17,9 +21,10 @@
       <input type="password" name="password" placeholder="Password" required />
       <button type="submit">Create Account</button>
     </form>
-    <p>Already have an account? <a href="signin.html">Sign In</a></p>
-    <a class="back-home" href="index.html">← Back to Home</a>
+    <p>Already have an account? <a href="{% url 'signin' %}">Sign In</a></p>
+    <a class="back-home" href="{% url 'index' %}">← Back to Home</a>
   </div>
+
   <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

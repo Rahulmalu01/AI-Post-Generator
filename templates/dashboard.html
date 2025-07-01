@@ -1,35 +1,49 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <meta charset="UTF-8">
+  <title>Your Dashboard - Post Genius</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 <body>
-  <h1>Your Dashboard</h1>
-  <h2>Generated Captions</h2>
-  <ul>
-    {% for item in captions %}
-      <li>{{ item.generated_at|date:"SHORT_DATETIME_FORMAT" }} - {{ item.caption }}</li>
-    {% empty %}
-      <li>No captions generated yet.</li>
-    {% endfor %}
-  </ul>
 
-  <h2>Generated Images</h2>
-  <div>
-    {% for image in images %}
-      <div style="margin: 10px 0;">
-        <img src="{{ image.image_url }}" style="max-width:300px"><br>
-        <small>{{ image.prompt }}</small><br>
-        <small>{{ image.generated_at|date:"SHORT_DATETIME_FORMAT" }}</small>
-      </div>
-    {% empty %}
-      <p>No images generated yet.</p>
-    {% endfor %}
+  {% include 'nav.html' %}
+
+  <div class="dashboard-content">
+    <h1>Welcome, {{ user.username }}</h1>
+
+    <h2>📝 Generated Captions</h2>
+    <a href="{% url 'export_captions' %}" class="btn btn-outline">Download Captions CSV</a>
+    <ul>
+      {% for item in captions %}
+        <li>
+          <strong>{{ item.generated_at|date:"SHORT_DATETIME_FORMAT" }}</strong><br>
+          {{ item.caption }}
+        </li>
+      {% empty %}
+        <li>No captions generated yet.</li>
+      {% endfor %}
+    </ul>
+
+    <h2>🖼️ Generated Images</h2>
+    <a href="{% url 'export_images' %}" class="btn btn-outline">Download Images CSV</a>
+    <div class="image-history">
+      {% for image in images %}
+        <div style="margin: 10px 0;">
+          <img src="{{ image.image_url }}" alt="Generated Image" style="max-width: 300px;" /><br>
+          <small><strong>Prompt:</strong> {{ image.prompt }}</small><br>
+          <small><strong>Date:</strong> {{ image.generated_at|date:"SHORT_DATETIME_FORMAT" }}</small>
+        </div>
+      {% empty %}
+        <p>No images generated yet.</p>
+      {% endfor %}
+    </div>
+    <a href="{% url 'profile' %}" class="btn btn-outline">👤 View/Edit Profile</a>
+    <a href="{% url 'index' %}" class="btn btn-cta">← Back to Home</a>
   </div>
-  <a href="{% url 'export_captions' %}" class="btn btn-outline">Download Captions CSV</a>
-  <a href="{% url 'export_images' %}" class="btn btn-outline">Download Images CSV</a>
-  <a href="{% url 'index' %}">← Back to Home</a>
+
+  <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

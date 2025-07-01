@@ -12,4 +12,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('export/captions/', views.export_captions_csv, name='export_captions'),
     path('export/images/', views.export_images_csv, name='export_images'),
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 ]

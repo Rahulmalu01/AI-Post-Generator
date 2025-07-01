@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Profile - Post Genius</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  {% include 'nav.html' %}
+
+  <div class="auth-container">
+    <h1>Edit Profile</h1>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <a href="{% url 'profile' %}" class="btn btn-outline">Back to Profile</a>
+  </div>
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
