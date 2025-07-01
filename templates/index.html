@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post Genius - Smart Social Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+
+  <!-- Reusable navigation bar -->
+  {% include "nav.html" %}
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>AI Tools for Captions & Images</h1>
+        {% if user.is_authenticated %}
+          <p>Welcome, {{ user.username }}! Use the tools below.</p>
+        {% else %}
+          <p>Please <a href="{% url 'signin' %}">sign in</a> to use tools.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {% if user.is_authenticated %}
+
+  <!-- Caption Generator -->
+  <section class="caption-generator">
+    <h2>Generate a Caption</h2>
+    <form id="caption-form">
+      <input type="text" id="caption-topic" placeholder="Enter a topic..." required />
+      <button type="submit">Generate Caption</button>
+    </form>
+    <div id="caption-result"></div>
+  </section>
+
+  <!-- Image Generator -->
+  <section class="image-generator">
+    <h2>Generate an Image</h2>
+    <form id="image-form">
+      <input type="text" id="image-prompt" placeholder="Describe an image..." required />
+      <button type="submit">Generate Image</button>
+    </form>
+    <div id="image-result"></div>
+  </section>
+
+  <!-- Engagement Predictor -->
+  <section class="analytics">
+    <h2>Predict Engagement</h2>
+    <form id="engagement-form">
+      <textarea id="caption-input" placeholder="Paste your caption here..." required></textarea>
+      <button type="submit">Predict</button>
+    </form>
+    <div id="engagement-result"></div>
+  </section>
+
+  {% endif %}
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

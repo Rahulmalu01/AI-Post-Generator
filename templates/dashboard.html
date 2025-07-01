@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <h1>Your Dashboard</h1>
+  <h2>Generated Captions</h2>
+  <ul>
+    {% for item in captions %}
+      <li>{{ item.generated_at|date:"SHORT_DATETIME_FORMAT" }} - {{ item.caption }}</li>
+    {% empty %}
+      <li>No captions generated yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Generated Images</h2>
+  <div>
+    {% for image in images %}
+      <div style="margin: 10px 0;">
+        <img src="{{ image.image_url }}" style="max-width:300px"><br>
+        <small>{{ image.prompt }}</small><br>
+        <small>{{ image.generated_at|date:"SHORT_DATETIME_FORMAT" }}</small>
+      </div>
+    {% empty %}
+      <p>No images generated yet.</p>
+    {% endfor %}
+  </div>
+  <a href="{% url 'export_captions' %}" class="btn btn-outline">Download Captions CSV</a>
+  <a href="{% url 'export_images' %}" class="btn btn-outline">Download Images CSV</a>
+  <a href="{% url 'index' %}">← Back to Home</a>
+</body>
+</html>
