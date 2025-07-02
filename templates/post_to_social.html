@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post to Social Media - Post Genius</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+  {% include 'nav.html' %}
+
+  <div class="auth-container">
+    <h1>Share Your Post to Social Media</h1>
+
+    <form method="POST" action="{% url 'post_to_social' %}">
+      {% csrf_token %}
+      <label for="platform">Platform:</label>
+      <select name="platform" required>
+        <option value="twitter">Twitter (X)</option>
+        <!-- Extend later to: Facebook, LinkedIn, Instagram -->
+      </select>
+
+      <label for="access_token">Access Token:</label>
+      <input type="text" name="access_token" placeholder="Paste token..." required />
+
+      <label for="content">Post Content:</label>
+      <textarea name="content" placeholder="Enter or paste caption..." required></textarea>
+
+      <button type="submit" class="btn btn-primary">Post Now</button>
+    </form>
+  </div>
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

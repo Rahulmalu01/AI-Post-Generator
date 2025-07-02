@@ -1,4 +1,4 @@
-import os, replicate, openai, csv
+import os, replicate, openai, csv, requests
 from dotenv import load_dotenv
 from textblob import TextBlob
 
@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import CaptionHistory, ImageHistory, UserProfile
 from .forms import ProfileForm
@@ -161,3 +162,31 @@ def edit_profile(request):
         form = ProfileForm(instance=profile)
 
     return render(request, 'edit_profile.html', {'form': form})
+
+@login_required
+@csrf_exempt
+def post_to_social(request):
+    if request.method == 'POST':
+        platform = request.POST.get('platform')
+        access_token = request.POST.get('access_token')
+        content = request.POST.get('content')
+
+        if platform == 'twitter':
+            url = "https://api.twitter.com/2/tweets"
+            headers = {
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "text": content
+            }
+            response = requests.post(url, headers=headers, json=payload)
+
+            if response.status_code == 201 or response.status_code == 200:
+                messages.success(request, "Post published successfully!")
+            else:
+                messages.error(request, f"Error: {response.status_code} - {response.text}")
+        else:
+            messages.error(request, "Unsupported platform.")
+
+    return render(request, 'post_to_social.html')

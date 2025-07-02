@@ -14,4 +14,5 @@ urlpatterns = [
     path('export/images/', views.export_images_csv, name='export_images'),
     path('profile/', views.profile_view, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('post-to-social/', views.post_to_social, name='post_to_social'),
 ]
