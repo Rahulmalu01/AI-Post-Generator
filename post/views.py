@@ -62,18 +62,18 @@ def logout_view(request):
 @login_required
 def generate_caption(request):
     if request.method == 'POST':
-        topic = request.POST.get('topic', '')
+        topic = request.POST.get('topic', '').strip()
         if not topic:
             return JsonResponse({'error': 'No topic provided'}, status=400)
         try:
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "Generate catchy, brand-friendly captions for social media."},
                     {"role": "user", "content": f"Generate a caption for: {topic}"}
                 ]
             )
-            caption = response.choices[0].message['content'].strip()
+            caption = response.choices[0].message.content.strip()
             CaptionHistory.objects.create(user=request.user, caption=caption)
             return JsonResponse({'caption': caption})
         except Exception as e:
@@ -295,3 +295,40 @@ def post_to_social(request):
                 messages.error(request, f"Instagram publish error: {publish_res.text}")
 
     return render(request, 'post_to_social.html', {'token': token})
+
+@login_required
+def generate_both(request):
+    if request.method == 'POST':
+        prompt = request.POST.get('combo_prompt', '').strip()
+        if not prompt:
+            messages.error(request, "Prompt is required.")
+            return redirect('dashboard')
+
+        try:
+            # 🔹 Generate Caption using Chat Completions
+            chat_response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "Generate a catchy, brand-friendly social media caption."},
+                    {"role": "user", "content": f"Generate a caption for: {prompt}"}
+                ]
+            )
+            caption = chat_response.choices[0].message.content.strip()
+            CaptionHistory.objects.create(user=request.user, caption=caption)
+
+            # 🔹 Generate Image using DALL·E
+            image_response = client.images.generate(
+                model="dall-e-2",  # or "dall-e-3" if you're allowed
+                prompt=prompt,
+                n=1,
+                size="512x512"
+            )
+            image_url = image_response.data[0].url
+            ImageHistory.objects.create(user=request.user, prompt=prompt, image_url=image_url)
+
+            messages.success(request, "Caption and image generated successfully!")
+
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
+    return redirect('dashboard')

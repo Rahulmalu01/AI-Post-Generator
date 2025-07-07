@@ -4,17 +4,66 @@
 <head>
   <title>My Profile - Post Genius</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    .auth-container {
+        max-width: 400px;
+        margin: 80px auto;
+        background-color: #2D2D2D;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .auth-container h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #7c3aed;
+    }
+
+    .auth-container img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }
+
+    .auth-container p {
+        font-size: 16px;
+        color: #D9D9D9;
+        margin: 10px 0;
+    }
+
+    .auth-container strong {
+        color: #7c3aed;
+    }
+
+    .auth-container a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 16px;
+        background: transparent;
+        border: 1px solid #404040;
+        color: #D9D9D9;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+
+    .auth-container a:hover {
+        background: #2D2D2D;
+    }
+  </style>
 </head>
 <body>
   {% include 'nav.html' %}
 
   <div class="auth-container">
     <h1>My Profile</h1>
-    <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%;">
+    <img src="{{ profile.avatar.url }}" alt="Avatar">
     <p><strong>Name:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Bio:</strong> {{ profile.bio|default:"No bio yet." }}</p>
-
     <a href="{% url 'edit_profile' %}" class="btn btn-outline">Edit Profile</a>
   </div>
 

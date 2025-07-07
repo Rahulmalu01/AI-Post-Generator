@@ -6,6 +6,131 @@
   <title>Your Dashboard - Post Genius</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <style>
+    .dashboard-content {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 40px;
+      background-color: #2D2D2D;
+      border-radius: 12px;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
+      color: #D9D9D9;
+    }
+
+    .dashboard-content h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #7c3aed;
+    }
+
+    .dashboard-content h2 {
+      font-size: 24px;
+      margin: 20px 0;
+      color: #D9D9D9;
+    }
+
+    .dashboard-content form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-content input[type="text"] {
+      padding: 12px 14px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #404040;
+      background-color: #1D1D1D;
+      color: #D9D9D9;
+      transition: border-color 0.3s;
+    }
+
+    .dashboard-content input::placeholder {
+      color: #999;
+    }
+
+    .dashboard-content input:focus {
+      border-color: #7c3aed;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+    }
+
+    .dashboard-content button {
+      padding: 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-primary {
+      background-color: #7c3aed;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: #6d28d9;
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #404040;
+      color: #D9D9D9;
+    }
+
+    .btn-outline:hover {
+      background: #2D2D2D;
+    }
+
+    .btn-cta {
+      background: #7c3aed;
+      color: #D9D9D9;
+      padding: 16px 32px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .btn-cta:hover {
+      background: #6d28d9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      background: #1f1f1f;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #7c3aed;
+    }
+
+    .image-history {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .image-history img {
+      border-radius: 8px;
+      max-width: 100%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .alert {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
@@ -14,7 +139,13 @@
   <div class="dashboard-content">
     <h1>Welcome, {{ user.username }}</h1>
 
-    <!-- 🔘 Generate Caption -->
+    <h2>✨ Generate Caption + Image</h2>
+    <form method="POST" action="{% url 'generate_both' %}">
+      {% csrf_token %}
+      <input type="text" name="combo_prompt" placeholder="Enter a prompt (e.g., festival sale)" required />
+      <button type="submit" class="btn btn-primary">Generate Both</button>
+    </form>
+    
     <h2>🪄 Generate Caption</h2>
     <form method="POST" action="{% url 'generate_caption' %}">
       {% csrf_token %}
@@ -22,7 +153,6 @@
       <button type="submit" class="btn btn-primary">Generate Caption</button>
     </form>
 
-    <!-- 🔘 Generate Image -->
     <h2>🎨 Generate Image</h2>
     <form method="POST" action="{% url 'generate_image' %}">
       {% csrf_token %}
@@ -65,12 +195,14 @@
     <a href="{% url 'post_to_social' %}" class="btn btn-outline">📤 Post to Social</a>
     <a href="{% url 'index' %}" class="btn btn-cta">← Back to Home</a>
   </div>
-    {% if not token_exists %}
-      <div class="alert alert-warning">
-        ⚠️ You haven’t connected your Facebook account yet.
-        <a href="{% url 'facebook_login' %}" class="btn btn-sm btn-primary">Connect Now</a>
-      </div>
-    {% endif %}
+
+  {% if not token_exists %}
+    <div class="alert alert-warning">
+      ⚠️ You haven’t connected your Facebook account yet.
+      <a href="{% url 'facebook_login' %}" class="btn btn-sm btn-primary">Connect Now</a>
+    </div>
+  {% endif %}
+
   <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

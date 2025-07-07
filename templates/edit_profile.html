@@ -4,6 +4,91 @@
 <head>
   <title>Edit Profile - Post Genius</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    .auth-container {
+        max-width: 400px;
+        margin: 80px auto;
+        background-color: #2D2D2D;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .auth-container h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #7c3aed;
+    }
+
+    .auth-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .auth-container input[type="text"],
+    .auth-container input[type="email"],
+    .auth-container input[type="password"],
+    .auth-container input[type="file"] {
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #404040;
+        background-color: #1D1D1D;
+        color: #D9D9D9;
+        transition: border-color 0.3s;
+    }
+
+    .auth-container input::placeholder {
+        color: #999;
+    }
+
+    .auth-container input:focus {
+        border-color: #7c3aed;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+    }
+
+    .auth-container button[type="submit"] {
+        background-color: #7c3aed;
+        color: #fff;
+        padding: 12px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s;
+    }
+
+    .auth-container button[type="submit"]:hover {
+        background-color: #6d28d9;
+        transform: scale(1.05);
+    }
+
+    .auth-container a {
+        color: #aaa;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .auth-container a:hover {
+        color: #7c3aed;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid #404040;
+        color: #D9D9D9;
+        padding: 10px 16px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+
+    .btn-outline:hover {
+        background: #2D2D2D;
+    }
+  </style>
 </head>
 <body>
   {% include 'nav.html' %}

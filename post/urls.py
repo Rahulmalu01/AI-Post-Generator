@@ -15,6 +15,7 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('post-to-social/', views.post_to_social, name='post_to_social'),
+    path('generate-both/', views.generate_both, name='generate_both'),
 
     # 🔗 Facebook & Instagram OAuth and callback
     path('facebook/login/', views.facebook_login, name='facebook_login'),
