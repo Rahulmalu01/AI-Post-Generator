@@ -14,6 +14,24 @@
   <div class="dashboard-content">
     <h1>Welcome, {{ user.username }}</h1>
 
+    <!-- 🔘 Generate Caption -->
+    <h2>🪄 Generate Caption</h2>
+    <form method="POST" action="{% url 'generate_caption' %}">
+      {% csrf_token %}
+      <input type="text" name="topic" placeholder="Enter caption topic (e.g., sale, event)" required />
+      <button type="submit" class="btn btn-primary">Generate Caption</button>
+    </form>
+
+    <!-- 🔘 Generate Image -->
+    <h2>🎨 Generate Image</h2>
+    <form method="POST" action="{% url 'generate_image' %}">
+      {% csrf_token %}
+      <input type="text" name="prompt" placeholder="Enter image prompt (e.g., sunset on the beach)" required />
+      <button type="submit" class="btn btn-primary">Generate Image</button>
+    </form>
+
+    <hr>
+
     <h2>📝 Generated Captions</h2>
     <a href="{% url 'export_captions' %}" class="btn btn-outline">Download Captions CSV</a>
     <ul>
@@ -40,11 +58,19 @@
         <p>No images generated yet.</p>
       {% endfor %}
     </div>
+
+    <hr>
+
     <a href="{% url 'profile' %}" class="btn btn-outline">👤 View/Edit Profile</a>
     <a href="{% url 'post_to_social' %}" class="btn btn-outline">📤 Post to Social</a>
     <a href="{% url 'index' %}" class="btn btn-cta">← Back to Home</a>
   </div>
-
+    {% if not token_exists %}
+      <div class="alert alert-warning">
+        ⚠️ You haven’t connected your Facebook account yet.
+        <a href="{% url 'facebook_login' %}" class="btn btn-sm btn-primary">Connect Now</a>
+      </div>
+    {% endif %}
   <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

@@ -1,36 +1,28 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Post to Social Media - Post Genius</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+<h2>📤 Post to Facebook / Instagram</h2>
 
-  {% include 'nav.html' %}
+{% if not token %}
+  <p>You have not connected your Facebook account yet.</p>
+  <a href="{% url 'facebook_login' %}" class="btn btn-primary">🔗 Connect Facebook</a>
+{% else %}
+  <form method="POST">
+    {% csrf_token %}
+    <label>Platform:</label>
+    <select name="platform">
+      <option value="facebook">Facebook</option>
+      <option value="instagram">Instagram</option>
+    </select>
 
-  <div class="auth-container">
-    <h1>Share Your Post to Social Media</h1>
+    <label>Caption:</label>
+    <textarea name="content" required></textarea>
 
-    <form method="POST" action="{% url 'post_to_social' %}">
-      {% csrf_token %}
-      <label for="platform">Platform:</label>
-      <select name="platform" required>
-        <option value="twitter">Twitter (X)</option>
-        <!-- Extend later to: Facebook, LinkedIn, Instagram -->
-      </select>
+    <label>Image URL (for Instagram):</label>
+    <input type="url" name="image_url" placeholder="https://example.com/image.jpg">
 
-      <label for="access_token">Access Token:</label>
-      <input type="text" name="access_token" placeholder="Paste token..." required />
+    <button type="submit" class="btn btn-success">🚀 Post Now</button>
+  </form>
+{% endif %}
 
-      <label for="content">Post Content:</label>
-      <textarea name="content" placeholder="Enter or paste caption..." required></textarea>
-
-      <button type="submit" class="btn btn-primary">Post Now</button>
-    </form>
-  </div>
-
-  <script src="{% static 'script.js' %}"></script>
-</body>
-</html>
+<a href="{% url 'dashboard' %}" class="btn btn-outline">← Back to Dashboard</a>
+{% endblock %}
