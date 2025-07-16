@@ -92,7 +92,8 @@ def generate_image(request):
                 prompt=prompt,
                 size="1024x1024",
                 quality="standard",
-                n=1
+                n=1,
+                style="vivid",
             )
             image_url = response.data[0].url
             ImageHistory.objects.create(user=request.user, prompt=prompt, image_url=image_url)
@@ -318,10 +319,12 @@ def generate_both(request):
 
             # 🔹 Generate Image using DALL·E
             image_response = client.images.generate(
-                model="dall-e-2",  # or "dall-e-3" if you're allowed
+                model="dall-e-3",  # or "dall-e-3" if you're allowed
                 prompt=prompt,
                 n=1,
-                size="512x512"
+                size="1024x1024",
+                quality="standard",
+                style="vivid"
             )
             image_url = image_response.data[0].url
             ImageHistory.objects.create(user=request.user, prompt=prompt, image_url=image_url)
